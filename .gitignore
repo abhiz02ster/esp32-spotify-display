@@ -1,0 +1,16 @@
+# Credentials — NEVER commit these
+src/env.h
+embedded/env.h
+
+# PlatformIO build artifacts
+.pio/
+.cache/
+.env
+env.h
+implementation-doc/
+local_dev/
+# Python virtualenv
+venv/
+
+# macOS
+.DS_Store

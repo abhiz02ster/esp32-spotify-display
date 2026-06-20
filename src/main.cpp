@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "env.h"
 
 #include <Adafruit_GFX.h>
@@ -73,7 +74,7 @@ void setup()
     Serial.print("Connected! IP: ");
     Serial.println(WiFi.localIP());
     Serial.print("RSSI: "); Serial.print(WiFi.RSSI()); Serial.println(" dBm");
-    
+
     // initialize display
     display.init(115200);
     Serial.println("Initialized E-Ink display");

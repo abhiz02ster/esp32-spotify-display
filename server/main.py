@@ -34,15 +34,20 @@ def get_bitmap_from_url(image_url):
     image = Image.open('./image.png')
 
     # resize
-    resized_image = image.resize((128, 128))
-    # resized_image.save('./images/resized-image.png')
+    resized_image = image.resize((200, 200))
 
-    # convert to bitmap array
-    bitmap = []
-    img_arr = np.array(resized_image)
+    # convert to 1-bit monochrome with Floyd-Steinberg dithering
+    try:
+        dither_algo = Image.Dither.FLOYDSTEINBERG
+    except AttributeError:
+        dither_algo = Image.FLOYDSTEINBERG
 
-    for i in range(len(img_arr)): 
-        for j in range(len(img_arr)):
-            bitmap.append(rgb_to_16_bit_color(img_arr[i][j]))
+    mono_image = resized_image.convert('1', dither=dither_algo)
 
-    return bitmap
+    # convert to 1-bit packed byte array
+    img_bytes = mono_image.tobytes()
+
+    # Invert bits so that 1 represents Black (foreground) and 0 represents White (background)
+    inverted_bytes = [b ^ 0xFF for b in img_bytes]
+
+    return inverted_bytes
